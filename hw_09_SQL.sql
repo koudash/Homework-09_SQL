@@ -17,10 +17,11 @@ SELECT first_name AS 'First Name', last_name AS 'Last Name'
 FROM actor
 WHERE last_name LIKE '%GEN%';
 
-# 2c. Find all actors whose last names contain the letter "LI" and display in the order of 1.last name and 2.first name
-SELECT last_name as 'Last Name', first_name AS 'First Name'
+# 2c. Find all actors whose last names contain the letter "LI" and order the rows by last name and first name
+SELECT first_name as 'First Name', last_name AS 'Last Name'
 FROM actor
-WHERE INSTR(last_name, 'LI') > 0;
+WHERE INSTR(last_name, 'LI') > 0
+ORDER BY last_name, first_name;
 
 # 2d. Using "IN", display the "country_id" and "country" columns of Afghanistan, Bangladesh, and China
 SELECT country_id AS 'Country ID', country AS 'Country' 
@@ -30,10 +31,15 @@ WHERE country IN ('Afghanistan', 'Bangladesh', 'China');
 # 3a. Create a column in "actor" table named "description" and use the data type "BLOB"
 ALTER TABLE actor
 ADD COLUMN description BLOB;
+-- Check column names in "actor" table
+SELECT COLUMN_NAME 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'actor';
 
 # 3b. Delete the "description" column from "actor" table
 ALTER TABLE actor
 DROP COLUMN description;
+-- Go back to 3a. to check column names in "actor" table
 
 # 4a. List the last names of actors, as well as how many actors have that last name
 SELECT last_name AS 'Last Name', COUNT(*) AS 'Count of Last Name' 
@@ -48,13 +54,16 @@ HAVING COUNT(*) > 1;
 
 # 4c. Change the name of "GROUCHO WILLIAMS" to "HARPO WILLIAMS" in "actor" table
 UPDATE actor
-SET first_name = 'HARPO' WHERE (first_name = 'GROUCHO' AND last_name = 'WILLIAMS');
+SET first_name = 'HARPO'
+WHERE (first_name = 'GROUCHO' AND last_name = 'WILLIAMS');
 -- Check whether the change takes effect
 SELECT actor_id, first_name, last_name FROM actor WHERE last_name = 'WILLIAMS';
 
 # 4d. Reverse the change made in 4c
 UPDATE actor
-SET first_name = 'GROUCHO' WHERE (first_name = 'HARPO' AND last_name = 'WILLIAMS');
+SET first_name = 'GROUCHO'
+WHERE (first_name = 'HARPO' AND last_name = 'WILLIAMS');
+-- Go back to 4a. to check whether the change has been reversed
 
 # 5a. Re-create "address" table
 SHOW CREATE TABLE address;
@@ -70,6 +79,7 @@ FROM staff s
 JOIN payment p ON s.staff_id = p.staff_id
 WHERE p.payment_date BETWEEN '2005-08-01 00:00:00' AND '2005-08-31 23:59:59' 
 -- Alternatively: WHERE DATE(p.payment_date) BETWEEN '2005-08-01' AND '2005-08-31'
+-- Or: WHERE p.payment_date LIKE '2005-08-%'
 GROUP BY p.staff_id;
 
 # 6c. List each film and the number of actors listed for that film
