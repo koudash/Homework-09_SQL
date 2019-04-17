@@ -158,7 +158,7 @@ FROM film f
 JOIN inventory i ON f.film_id = i.film_id
 	JOIN rental r ON i.inventory_id = r.inventory_id
 GROUP BY i.film_id
-ORDER BY COUNT(r.inventory_id) DESC;
+ORDER BY COUNT(i.film_id) DESC;
 
 # 7f. Display how much business, in dollars, each store brought in
 SELECT s.store_id AS 'Store ID', SUM(p.amount) AS 'Total Rental Revenue'
