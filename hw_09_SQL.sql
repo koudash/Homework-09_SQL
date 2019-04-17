@@ -153,11 +153,11 @@ JOIN film_category fc ON f.film_id = fc.film_id
 ;
 
 # 7e. Display the most frequently rented movies in descending order
-SELECT f.film_id AS 'Film ID', f.title AS 'Film Title', COUNT(r.inventory_id) AS "Rental Counts"
+SELECT f.film_id AS 'Film ID', f.title AS 'Film Title', COUNT(i.film_id) AS "Rental Counts"
 FROM film f
 JOIN inventory i ON f.film_id = i.film_id
 	JOIN rental r ON i.inventory_id = r.inventory_id
-GROUP BY r.inventory_id
+GROUP BY i.film_id
 ORDER BY COUNT(r.inventory_id) DESC;
 
 # 7f. Display how much business, in dollars, each store brought in
