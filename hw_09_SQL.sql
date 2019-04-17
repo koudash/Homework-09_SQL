@@ -191,7 +191,7 @@ SELECT c.name AS 'Film Genre', SUM(p.amount) AS 'Gross Revenue'
 FROM payment p
 JOIN rental r ON p.rental_id = r.rental_id
 	JOIN inventory i ON r.inventory_id = i.inventory_id
-		JOIN film_category fc Otop_five_genresN i.film_id = fc.film_id
+		JOIN film_category fc ON i.film_id = fc.film_id
 			JOIN category c ON fc.category_id = c.category_id
 GROUP BY i.film_id
 ORDER BY SUM(p.amount) DESC
